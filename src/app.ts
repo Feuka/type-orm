@@ -8,13 +8,15 @@ import UserRoute from './Routes/Users'
 import MessageRoute from './Routes/Message'
 
 import * as bodyParser from 'body-parser'
+import tokenKey from './token';
+
 
 const jwtExpress = require('express-jwt');
 const app = express();
 const port = 3000;
 
 app.use(bodyParser.json());
-app.use(jwtExpress({ secret: 'yesyesyes', algorithms: ['HS256']}).unless({path: 
+app.use(jwtExpress({ secret: tokenKey, algorithms: ['HS256']}).unless({path: 
     ['/token', "/auth", "/users/create"],
 }));
 
