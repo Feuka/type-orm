@@ -4,12 +4,12 @@ import {Message} from '../models/Message'
 import {User} from '../models/User'
 import express from 'express'
 import { body, validationResult } from 'express-validator';
+import { messageForm } from "../form_validator/messageForm";
+
 
 const router = express.Router();
 
-router.post('/messages', 
-body('content').isLength({min:1}),
-async (req,res)=> {
+router.post('/messages', messageForm, async (req,res)=> {
 
     const errors = validationResult(req)
 

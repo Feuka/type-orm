@@ -4,8 +4,8 @@ import {User} from '../models/User'
 import express from 'express'
 import * as jwt from 'jsonwebtoken'
 import tokenKey from './../token';
-import { body, validationResult } from 'express-validator';
-
+import { validationResult } from 'express-validator';
+import {userForm} from './../form_validator/userForm'
 
 const router = express.Router();
 
@@ -16,12 +16,7 @@ router.get("/users/me",async (req,res)=>{
     res.json({data:user})
 })
 
-router.post('/users', 
-body("firstname").isLength({min:4}),
-body('lastname').isLength({min:4}),
-body('email').isEmail(),
-body("password").isLength({min:5})
-, async (req: express.Request,res: express.Response)=> {
+router.post('/users', userForm, async (req: express.Request,res: express.Response)=> {
 
     const errors = validationResult(req)
 
