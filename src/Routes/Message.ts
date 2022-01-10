@@ -6,16 +6,15 @@ import express from 'express'
 
 const router = express.Router();
 
-router.post('/users/create', async (req,res)=> {
+router.post('/messages/create', async (req,res)=> {
 
-    const userData = {...req.body, password:sha512.sha512(req.body.password)}
-    const user = new User()
-    user.firstname = userData.firstname
-    user.lastname = userData.lastname
-    user.password = userData.password
-    user.email = userData.email
+    const messageData = req.body
+    const message = new Message()
+    message.content = messageData.content
+    // @ts-ignore
+    message.user = req.user.user.id
 
-    const result = await getConnection().manager.save(user)
+    const result = await getConnection().manager.save(message)
 
     res.json({status:200, result : result})
 })
