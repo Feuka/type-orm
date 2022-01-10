@@ -22,7 +22,7 @@ router.post('/users', async (req,res)=> {
     user.password = userData.password
     user.email = userData.email
 
-    const result = await getConnection().manager.save(user)
+    const result = await User.save(user)
 
     res.json({status:200, result : result})
 })

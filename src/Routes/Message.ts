@@ -14,7 +14,7 @@ router.post('/messages', async (req,res)=> {
     // @ts-ignore
     message.user = req.user.user.id
 
-    const result = await getConnection().manager.save(message)
+    const result = await Message.save(message)
 
     res.json({status:200, result : result})
 })
