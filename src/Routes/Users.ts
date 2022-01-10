@@ -13,7 +13,7 @@ router.get("/users/me",async (req,res)=>{
     res.json({data:user})
 })
 
-router.post('/users/create', async (req,res)=> {
+router.post('/users', async (req,res)=> {
 
     const userData = {...req.body, password:sha512.sha512(req.body.password)}
     const user = new User()

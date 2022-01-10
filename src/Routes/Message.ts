@@ -6,7 +6,7 @@ import express from 'express'
 
 const router = express.Router();
 
-router.post('/messages/create', async (req,res)=> {
+router.post('/messages', async (req,res)=> {
 
     const messageData = req.body
     const message = new Message()
@@ -19,7 +19,7 @@ router.post('/messages/create', async (req,res)=> {
     res.json({status:200, result : result})
 })
 
-router.get('/messages/list', async(req,res)=>{
+router.get('/messages', async(req,res)=>{
     const messages = await Message.find()
     res.json({status:200, messages:messages})
 })
