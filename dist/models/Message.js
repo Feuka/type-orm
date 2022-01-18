@@ -9,25 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Message = void 0;
 const typeorm_1 = require("typeorm");
 const User_1 = require("./User");
 let Message = class Message extends typeorm_1.BaseEntity {
 };
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)(),
+    typeorm_1.PrimaryGeneratedColumn(),
     __metadata("design:type", Number)
 ], Message.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)("text"),
+    typeorm_1.Column("text"),
     __metadata("design:type", String)
 ], Message.prototype, "content", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(type => User_1.User, user => user.messages),
+    typeorm_1.ManyToOne(type => User_1.User, user => user.messages),
     __metadata("design:type", User_1.User)
 ], Message.prototype, "user", void 0);
 Message = __decorate([
-    (0, typeorm_1.Entity)()
+    typeorm_1.Entity()
 ], Message);
 exports.Message = Message;
 //# sourceMappingURL=Message.js.map

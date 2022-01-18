@@ -1,5 +1,4 @@
 import * as sha512 from 'js-sha512'
-import {getConnection} from 'typeorm'
 import {User} from '../models/User'
 import express from 'express'
 import * as jwt from 'jsonwebtoken'
@@ -8,11 +7,11 @@ import { validationResult } from 'express-validator';
 import {userForm} from './../form_validator/userForm'
 
 const router = express.Router();
-
+// get actual user data
 router.get("/users/me",async (req,res)=>{
     res.json({data:req.user})
 })
-
+// create new user
 router.post('/users', userForm, async (req: express.Request,res: express.Response)=> {
 
     const errors = validationResult(req)
@@ -32,7 +31,7 @@ router.post('/users', userForm, async (req: express.Request,res: express.Respons
         res.json({status:200, result : result})
     }
 })
-
+// login
 router.post('/auth', async (req,res)=>{
     const user = await User.findOne({
         where : {
@@ -41,9 +40,12 @@ router.post('/auth', async (req,res)=>{
         }
     })
 
-    const token = jwt.sign({user}, tokenKey);
-
-    res.json({status:200, result : user, token : token})
+    if (user) {
+        const token = jwt.sign({user}, tokenKey);
+        res.json({status:200, result : user, token : token})
+    } else {
+        res.json({status:400, message:"credentials are not correct"})
+    }
 })
 
 export default router;

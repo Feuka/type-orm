@@ -1,16 +1,13 @@
-import * as sha512 from 'js-sha512'
-import {getConnection} from 'typeorm'
 import {Message} from '../models/Message'
-import {User} from '../models/User'
 import express from 'express'
-import { body, validationResult } from 'express-validator';
-import { messageForm } from "../form_validator/messageForm";
+import {validationResult} from 'express-validator';
+import {messageForm} from "../form_validator/messageForm";
 
 
 const router = express.Router();
 
+// To create new message with form verifications using experess validator
 router.post('/messages', messageForm, async (req,res)=> {
-
     const errors = validationResult(req)
 
     if (!errors.isEmpty()){
@@ -19,7 +16,6 @@ router.post('/messages', messageForm, async (req,res)=> {
         const messageData = req.body
         const message = new Message()
         message.content = messageData.content
-        // @ts-ignore
         message.user = req.user.user.id
     
         const result = await Message.save(message)
@@ -28,6 +24,7 @@ router.post('/messages', messageForm, async (req,res)=> {
     }
 })
 
+// To get all messages
 router.get('/messages', async(req,res)=>{
     const messages = await Message.find()
     res.json({status:200, messages:messages})

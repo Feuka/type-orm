@@ -1,20 +1,17 @@
 import express from 'express';
 import "reflect-metadata";
-import {createConnection, getConnection } from "typeorm";
+import {createConnection} from "typeorm";
 import {User} from './models/User'
 import {Message} from './models/Message'
-
 import UserRoute from './Routes/Users'
 import MessageRoute from './Routes/Message'
-
 import * as bodyParser from 'body-parser'
 import tokenKey from './token';
-
 import { Server } from 'socket.io'
 
+// initialize server with jwt verification
 const jwtExpress = require('express-jwt');
 const app = express();
-
 const http = require('http');
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -72,14 +69,7 @@ io.on('connection', (socket) => {
     console.log(socket.id);
     socket.on('messages', (message)=> {
         io.emit('messages', message);
-        console.log("message :"+message);
     })
 });
-
-
-// app.get('/find', async (req,res) => {
-//     const user = await User.find({relations:["messages"]})
-//     res.json({status:200, data:user})
-// })
 
 server.listen(3000);
