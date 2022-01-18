@@ -10,10 +10,7 @@ import {userForm} from './../form_validator/userForm'
 const router = express.Router();
 
 router.get("/users/me",async (req,res)=>{
-    // @ts-ignore
-    const user = await User.findOne({where:{id: req.user.user.id}})
-
-    res.json({data:user})
+    res.json({data:req.user})
 })
 
 router.post('/users', userForm, async (req: express.Request,res: express.Response)=> {
